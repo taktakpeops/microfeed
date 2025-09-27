@@ -5,6 +5,6 @@ binding = "FEED_DB"
 database_name = "FEED_DB"
 database_id = "id_placeholder"
 
-[env.production]
-
-[env.preview]
+[[ env.development.routes ]]
+pattern = "dev.api.blog.camime.tattoo"
+custom_domain = true
