@@ -72,7 +72,7 @@ class WranglerCmd {
    * https://github.com/cloudflare/wrangler2/blob/main/packages/wrangler/src/d1/list.tsx#L34
    */
   getDatabaseId(onSuccess) {
-    const dbName = this.currentEnv !== 'development' ? this._non_dev_db() : 'FEED_DB';
+    const dbName = this._non_dev_db(); // : 'FEED_DB';
     const accountId = this.v.get('CLOUDFLARE_ACCOUNT_ID');
     const apiKey = this.v.get('CLOUDFLARE_API_TOKEN');
     const options = {
