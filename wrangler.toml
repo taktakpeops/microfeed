@@ -1,5 +1,6 @@
 compatibility_date = "2025-03-14"
 
-[[ env.preview.routes ]]
-pattern = "dev.api.blog.camime.tattoo"
+[env.preview]
+[[env.preview.routes]]
+pattern = "api.blog.dev.camime.tattoo"
 custom_domain = true
