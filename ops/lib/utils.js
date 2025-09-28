@@ -92,6 +92,7 @@ class WranglerCmd {
 
       response.on('end', () => {
         const body = JSON.parse(data);
+        console.log('body', body);
         let databaseId = '';
         body.result.forEach((result) => {
           if (result.name === dbName) {
