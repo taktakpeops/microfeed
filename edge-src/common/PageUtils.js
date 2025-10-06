@@ -42,8 +42,7 @@ class ResponseBuilder {
           break;
         case 'offline':
           const apiSettings = this.settings[SETTINGS_CATEGORIES.API_SETTINGS];
-          console.log('apiSettings', apiSettings);
-          console.log(this.request.url);
+          
           if (!apiSettings?.enabled) {
             return ResponseBuilder.Response404();
           }
