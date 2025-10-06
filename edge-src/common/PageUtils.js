@@ -41,7 +41,11 @@ class ResponseBuilder {
           }
           break;
         case 'offline':
-          return ResponseBuilder.Response404();
+          const urlObj = new URL(this.request.url);
+
+          if (!urlObj.pathname.startsWith('/api/')) {
+            return ResponseBuilder.Response404();
+          }
         default:
           break;
       }
