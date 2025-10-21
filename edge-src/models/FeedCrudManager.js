@@ -13,6 +13,13 @@ export default class FeedCrudManager {
   _publicToInternalSchemaForItem(item) {
     const internalSchema = {};
 
+    // Handle multi-language structure
+    if (item.languages && item.content) {
+      internalSchema.languages = item.languages;
+      internalSchema.content = item.content;
+    }
+
+    // For backward compatibility, also handle flat structure
     if (item.title) {
       internalSchema.title = item.title;
     }
@@ -91,6 +98,7 @@ export default class FeedCrudManager {
     if (typeof item._microfeed['itunes:explicit'] === 'boolean') {
       internalSchema['itunes:explicit'] = item._microfeed['itunes:explicit'];
     }
+    
     return internalSchema;
   }
 

@@ -20,9 +20,36 @@ export default class FeedPublicJsonBuilder {
     this.baseUrl = baseUrl;
     this.forOneItem = forOneItem;
     this.request = request;
+    
+    // Get language from query parameter, default to 'en'
+    const url = new URL(request.url);
+    this.language = url.searchParams.get('lang') || 'en';
+  }
+
+  // Helper function to extract language-specific content from item
+  _getItemContentForLanguage(item, language) {
+    // Check if item has multi-language structure
+    if (item.content && item.languages) {
+      // Use specified language if available, otherwise use first available language
+      const targetLang = item.languages.includes(language) ? language : item.languages[0];
+      return item.content[targetLang] || {};
+    }
+    
+    // For backward compatibility, return the item itself (flat structure)
+    return item;
   }
 
   _decorateForItem(item, baseUrl) {
+    // Get language-specific content
+    const langContent = this._getItemContentForLanguage(item, this.language);
+    
+    // Merge language-specific fields into item for compatibility
+    item.title = langContent.title || item.title || 'untitled';
+    item.description = langContent.description || item.description || '';
+    item.link = langContent.link || item.link;
+    item.image = langContent.image || item.image;
+    item['itunes:title'] = langContent['itunes:title'] || item['itunes:title'];
+    
     item.webUrl = PUBLIC_URLS.webItem(item.id, item.title, baseUrl);
     item.jsonUrl = PUBLIC_URLS.jsonItem(item.id, null, baseUrl);
     item.rssUrl = PUBLIC_URLS.rssItem(item.id, null, baseUrl);
@@ -206,6 +233,12 @@ export default class FeedPublicJsonBuilder {
       guid: item.guid,
       status: ITEM_STATUSES_DICT[item.status] ? ITEM_STATUSES_DICT[item.status].name : 'published',
     };
+    
+    // Add multi-language metadata
+    if (item.languages && item.content) {
+      _microfeed.languages = item.languages;
+      _microfeed.current_language = this.language;
+    }
 
     if (isValidMediaFile(mediaFile)) {
       if (mediaFile.url) {

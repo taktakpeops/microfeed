@@ -247,6 +247,16 @@ export const ITEM_STATUSES_DICT = {
   },
 };
 
+export const SUPPORTED_LANGUAGES = ['en', 'ca', 'es'];
+
+export const LANGUAGE_NAMES = {
+  en: 'English',
+  ca: 'Catalan',
+  es: 'Spanish'
+};
+
+export const TRANSLATABLE_ITEM_FIELDS = ['title', 'description', 'image', 'link', 'itunes:title'];
+
 export const LANGUAGE_CODES_LIST = [
   {
     "name": "Afrikaans",
