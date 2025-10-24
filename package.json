@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "yarn setup:development && concurrently --kill-others-on-fail \"yarn dev:edge\" \"yarn dev:client\"",
-    "dev:edge": "DEPLOYMENT_ENVIRONMENT=development wrangler pages dev --d1 FEED_DB=id_placeholder --local ./public",
+    "dev:edge": "DEPLOYMENT_ENVIRONMENT=development wrangler pages dev --d1 FEED_DB=blog-camila-tattoo --local ./public",
     "dev:client": "webpack serve --host localhost --mode development",
     "build:production": "NODE_ENV=production webpack --config ./webpack.config.js",
     "setup:development": "yarn install && node ops/generate_local_vars.js && node ops/init_feed_db.js",

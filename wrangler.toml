@@ -1,10 +1,6 @@
 compatibility_date = "2025-03-14"
 
-[[ env.development.d1_databases ]]
-binding = "FEED_DB"
-database_name = "FEED_DB"
-database_id = "id_placeholder"
-
-[env.production]
-
 [env.preview]
+[[env.preview.routes]]
+pattern = "api.blog.dev.camime.tattoo"
+custom_domain = true
