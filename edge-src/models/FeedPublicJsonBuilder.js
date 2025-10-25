@@ -44,11 +44,12 @@ export default class FeedPublicJsonBuilder {
     const langContent = this._getItemContentForLanguage(item, this.language);
     
     // Merge language-specific fields into item for compatibility
-    item.title = langContent.title || item.title || 'untitled';
-    item.description = langContent.description || item.description || '';
-    item.link = langContent.link || item.link;
-    item.image = langContent.image || item.image;
-    item['itunes:title'] = langContent['itunes:title'] || item['itunes:title'];
+    // Use proper fallback: check if field exists in langContent first, then fall back to root
+    item.title = langContent.title !== undefined ? langContent.title : (item.title || 'untitled');
+    item.description = langContent.description !== undefined ? langContent.description : (item.description || '');
+    item.link = langContent.link !== undefined ? langContent.link : item.link;
+    item.image = langContent.image !== undefined ? langContent.image : item.image;
+    item['itunes:title'] = langContent['itunes:title'] !== undefined ? langContent['itunes:title'] : item['itunes:title'];
     
     item.webUrl = PUBLIC_URLS.webItem(item.id, item.title, baseUrl);
     item.jsonUrl = PUBLIC_URLS.jsonItem(item.id, null, baseUrl);

@@ -59,6 +59,18 @@ paths:
             example: newest_first
             default: newest_first
             enum: [ "newest_first", "oldest_first" ]
+        - name: lang
+          in: query
+          description: |
+            Language code to retrieve content in a specific language. 
+            If the item has multi-language support, the API will return content in the specified language.
+            If the language is not available for an item, it will fallback to the first available language.
+          required: false
+          schema:
+            type: string
+            example: en
+            default: en
+            enum: [ "en", "ca", "es" ]
       responses:
         200:
           description: Success response.
@@ -93,6 +105,18 @@ paths:
       operationId: fetchItemJson
       parameters:
         - $ref: '#/components/parameters/itemIdParam'
+        - name: lang
+          in: query
+          description: |
+            Language code to retrieve content in a specific language. 
+            If the item has multi-language support, the API will return content in the specified language.
+            If the language is not available for an item, it will fallback to the first available language.
+          required: false
+          schema:
+            type: string
+            example: en
+            default: en
+            enum: [ "en", "ca", "es" ]
       responses:
         200:
           description: Success response.
@@ -704,6 +728,20 @@ components:
           type: integer
           description: The item's published date in milliseconds.
           example: 1672707197212
+        languages:
+          type: array
+          description: |
+            An array of language codes that this item supports.
+            If this field is present, the item has multi-language content.
+          items:
+            type: string
+          example: ["en", "ca", "es"]
+        current_language:
+          type: string
+          description: |
+            The language code of the content currently returned in this response.
+            This will match the 'lang' query parameter if provided, or default to the first available language.
+          example: en
         "itunes:title":
           type: string
           description: |
